@@ -11,7 +11,6 @@ class Bohrium < Formula
   depends_on "swig" => :build
   depends_on "hwloc" => [:build, "universal"]
   depends_on "boost" => [:build, "--with-icu4c"]
-  depends_on "libiomp" => :build
 
   depends_on "mono" => [:build, :optional]
 
