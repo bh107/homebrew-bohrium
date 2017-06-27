@@ -1,8 +1,8 @@
 class Bohrium < Formula
   desc "Runtime for efficiently executing vectorized applications using Python"
   homepage "http://bohrium.readthedocs.io/"
-  url "https://github.com/bh107/bohrium/archive/v0.5.tar.gz"
-  sha256 "4457cd6faf4f014d58824d161704b5ab0fefa813256110b04f3b9bae39c39dfa"
+  url "https://github.com/bh107/bohrium/archive/v0.8.4.tar.gz"
+  sha256 "c53e87bfc9c2a22bf36b4a06559b87cecb526c809195d1110e32199c969c0018"
   head "https://github.com/bh107/bohrium.git"
 
   depends_on :arch => :x86_64
