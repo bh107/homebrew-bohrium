@@ -11,11 +11,15 @@ class Bohrium < Formula
   depends_on "swig" => :build
   depends_on "hwloc" => [:build, "universal"]
   depends_on "boost" => [:build, "--with-icu4c"]
-
-  depends_on "mono" => [:build, :optional]
+  depends_on "clang-omp" => [:build, :recommended]
 
   depends_on :python => :run
   depends_on "numpy" => :run
+  depends_on "cython" => [:python, "cython", :build]
+  depends_on "mono" => [:run, :optional]
+
+  depends_on "opencv3" => [:run, :optional]
+  depends_on "clblas" => [:build, :optional]
 
   def install
     cmake_args = ["-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", "-Wno-dev", "-DUSE_WERROR=ON"]
@@ -24,6 +28,11 @@ class Bohrium < Formula
       cmake_args << "-DTEST_CIL=OFF"
       cmake_args << "-DBRIDGE_CIL=OFF"
       cmake_args << "-DBRIDGE_NUMCIL=OFF"
+    end
+
+    if build.with?("clang-omp")
+      cmake_args << "-DCMAKE_CXX_COMPILER=clang-omp++"
+      cmake_args << "-DCMAKE_C_COMPILER=clang-omp"
     end
 
     system "cmake", ".", *cmake_args

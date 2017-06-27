@@ -1,6 +1,4 @@
-#!/usr/bin/env bash
-
-set -e
+#!/usr/bin/env bash -e
 
 filestring=`curl -s https://github.com/bh107/bohrium/releases | grep "archive.*gz" | head -n 1 | cut -d '"' -f2`
 url="https://github.com$filestring"
