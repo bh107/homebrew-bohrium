@@ -8,30 +8,26 @@ class Bohrium < Formula
   depends_on :arch => :x86_64
 
   depends_on "cmake" => :build
+  depends_on "llvm" => :build
   depends_on "swig" => :build
   depends_on "boost" => [:build, "--with-icu4c"]
 
   depends_on :python => :run
   depends_on "numpy" => :run
   depends_on "cython" => [:python, "cython", :build]
-  depends_on "mono" => [:run, :optional]
 
   depends_on "opencv3" => [:run, :optional]
-  depends_on "clblas" => [:build, :optional]
+  depends_on "clblas" => [:run, :optional]
 
   def install
-    cmake_args = ["-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_INSTALL_PREFIX=#{prefix}", "-Wno-dev", "-DUSE_WERROR=ON"]
+    cmake_args = []
+    cmake_args << "-DCMAKE_BUILD_TYPE=Release"
+    cmake_args << "-DCMAKE_INSTALL_PREFIX=#{prefix}"
+    cmake_args << "-Wno-dev"
+    cmake_args << "-DUSE_WERROR=ON"
 
-    if build.without?("mono")
-      cmake_args << "-DTEST_CIL=OFF"
-      cmake_args << "-DBRIDGE_CIL=OFF"
-      cmake_args << "-DBRIDGE_NUMCIL=OFF"
-    end
-
-    if build.with?("clang-omp")
-      cmake_args << "-DCMAKE_CXX_COMPILER=clang-omp++"
-      cmake_args << "-DCMAKE_C_COMPILER=clang-omp"
-    end
+    cmake_args << "-DCMAKE_CXX_COMPILER=clang++"
+    cmake_args << "-DCMAKE_C_COMPILER=clang"
 
     system "cmake", ".", *cmake_args
 
