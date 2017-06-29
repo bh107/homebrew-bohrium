@@ -9,9 +9,7 @@ class Bohrium < Formula
 
   depends_on "cmake" => :build
   depends_on "swig" => :build
-  depends_on "hwloc" => [:build, "universal"]
   depends_on "boost" => [:build, "--with-icu4c"]
-  depends_on "clang-omp" => [:build, :recommended]
 
   depends_on :python => :run
   depends_on "numpy" => :run
