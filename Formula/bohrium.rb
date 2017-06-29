@@ -29,6 +29,8 @@ class Bohrium < Formula
     cmake_args << "-DCMAKE_CXX_COMPILER=clang++"
     cmake_args << "-DCMAKE_C_COMPILER=clang"
 
+    cmake_args << "-DCMAKE_CXX_FLAGS='-Wno-expansion-to-defined'"
+
     system "cmake", ".", *cmake_args
 
     system "make"
