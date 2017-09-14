@@ -16,7 +16,7 @@ class Bohrium < Formula
   depends_on "numpy" => :run
   depends_on "cython" => [:python, "cython", :build]
 
-  depends_on "opencv3" => [:run, :optional]
+  depends_on "opencv" => [:run, :optional]
   depends_on "clblas" => [:run, :optional]
 
   def install
