@@ -6,8 +6,8 @@ class Bohrium < Formula
   head "https://github.com/bh107/bohrium.git"
 
   resource "Cython" do
-    url "https://github.com/bh107/bohrium/archive/v0.8.7.tar.gz"
-    sha256 "b23b6098b16cf081d27adb667af0150211e3cfd600fd88cce3df5c57fadc5ce4"
+    url "https://files.pythonhosted.org/packages/94/63/f54920c2ddbe3e1341a4c268f7091bf1bf53c3d84f4b115aa5beea64aef9/Cython-0.27.tar.gz"
+    sha256 "b932b5194e87a8b853d493dc1b46e38632d6846a86f55b8346eb9c6ec3bdc00b"
   end
 
   depends_on :arch => :x86_64
@@ -30,10 +30,10 @@ class Bohrium < Formula
 
   def install
     # Set some env-variables
-    ENV["C_INCLUDE_PATH"] = `llvm-config --includedir`
-    ENV["CPP_INCLUDE_PATH"] = `llvm-config --includedir`
-    ENV["LIBRARY_PATH"] = "#{`llvm-config --libdir`}:#{`echo $LIBRARY_PATH`}"
-    ENV["DYLD_LIBRARY_PATH"] = "#{`llvm-config --libdir`}:#{`echo $DYLD_LIBRARY_PATH`}"
+    ENV["C_INCLUDE_PATH"] = "#{`llvm-config --includedir`.chop}"
+    ENV["CPP_INCLUDE_PATH"] = "#{`llvm-config --includedir`.chop}"
+    ENV["LIBRARY_PATH"] = "#{`llvm-config --libdir`.chop}:#{`echo $LIBRARY_PATH`.chop}"
+    ENV["DYLD_LIBRARY_PATH"] = "#{`llvm-config --libdir`.chop}:#{`echo $DYLD_LIBRARY_PATH`.chop}"
 
     # Build Cython, because we can't depend on it
     pyver = Language::Python.major_minor_version "python"
@@ -41,6 +41,7 @@ class Bohrium < Formula
       pyver = Language::Python.major_minor_version "python3"
     end
     ENV.prepend_create_path "PYTHONPATH", libexec/"vendor/lib/python#{pyver}/site-packages"
+    ENV.prepend_create_path "PATH", libexec/"vendor/bin"
     resource("Cython").stage do
       system "python", *Language::Python.setup_install_args(libexec/"vendor")
     end

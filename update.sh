@@ -7,8 +7,8 @@ sha=`shasum -a 256 release.tar.gz | cut -d ' ' -f1`
 rm release.tar.gz
 
 url=${url//\//\\\/}
-perl -i -pe "s/url .*?$/url \"$url\"/g" Formula/bohrium.rb
-perl -i -pe "s/sha256 .*?$/sha256 \"$sha\"/g" Formula/bohrium.rb
+perl -i -pe "s/^\s{2}url .*?$/  url \"$url\"/" Formula/bohrium.rb
+perl -i -pe "s/^\s{2}sha256 .*?$/  sha256 \"$sha\"/" Formula/bohrium.rb
 
 if [ "$1" == "commit" ]; then
   git commit -am ":gem: Update"
