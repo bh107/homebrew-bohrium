@@ -13,20 +13,16 @@ class Bohrium < Formula
   depends_on :arch => :x86_64
 
   depends_on "cmake" => :build
-  depends_on "llvm" => :build
-  depends_on "boost" => [:build, "--with-icu4c"]
-  depends_on "python" => :build
-  depends_on "python3" => [:build, :optional]
+  depends_on "boost" => [:build, "with-icu4c", "with-c++11"]
   depends_on "swig" => :build
 
-  # depends_on "Cython" => [:python, "Cython", :build]
+  depends_on :python
+  depends_on :python3 => :optional
+  depends_on "numpy"
+  depends_on "llvm" => ["--with-toolchain --with-shared-libs"]
 
-  depends_on :python => :run
-  depends_on :python3 => [:run, :optional]
-  depends_on "numpy" => :run
-
-  depends_on "opencv" => [:run, :optional]
-  depends_on "clblas" => [:run, :optional]
+  depends_on "opencv" => [:build, :optional]
+  depends_on "clblas" => [:build, :optional]
 
   def install
     # Set some env-variables
