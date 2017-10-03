@@ -70,7 +70,7 @@ class Bohrium < Formula
     end
 
     # Make sure `llvm-config` is present in PATH
-    ENV.prepend_create_path "PATH", "#{libexec}/vendor/bin"
+    ENV["PATH"]="#{libexec}/vendor/bin:#{ENV["PATH"]}"
 
     <<-EOS.undent
     You may need to include the following in various environment variables for Bohrium to work properly:
