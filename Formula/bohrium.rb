@@ -70,16 +70,18 @@ class Bohrium < Formula
     end
 
     # Make sure `llvm-config` is present in PATH
-    ENV["PATH"]="#{libexec}/vendor/bin:#{ENV["PATH"]}"
+    ENV["PATH"]="/usr/local/opt/llvm/bin:#{ENV["PATH"]}"
 
     <<-EOS.undent
     You may need to include the following in various environment variables for Bohrium to work properly:
-        export PATH="#{libexec}/vendor/bin:$PATH"
         export PYTHONPATH="$PYTHONPATH;"#{libexec}/vendor/lib/python#{pyver}/site-packages"
         export C_INCLUDE_PATH="$C_INCLUDE_PATH;#{`llvm-config --includedir`.chop}"
         export CPP_INCLUDE_PATH="$CPP_INCLUDE_PATH;#{`llvm-config --includedir`.chop}"
         export LIBRARY_PATH="$LIBRARY_PATH;#{`llvm-config --libdir`.chop}"
         export DYLD_LIBRARY_PATH="$DYLD_LIBRARY_PATH;#{`llvm-config --libdir`.chop}"
+
+    Also make sure that 'clang' is on your PATH with e.g.
+        export PATH="/usr/local/opt/llvm/bin:$PATH"
     EOS
   end
 
