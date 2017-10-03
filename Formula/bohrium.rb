@@ -69,6 +69,9 @@ class Bohrium < Formula
       pyver = Language::Python.major_minor_version "python3"
     end
 
+    # Make sure `llvm-config` is present in PATH
+    ENV.prepend_create_path "PATH", "#{libexec}/vendor/bin"
+
     <<-EOS.undent
     You may need to include the following in various environment variables for Bohrium to work properly:
         export PATH="#{libexec}/vendor/bin:$PATH"
