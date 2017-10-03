@@ -21,18 +21,10 @@ class Bohrium < Formula
   depends_on "clblas" => :optional
 
   def install
-    pyver = Language::Python.major_minor_version "python"
-    if build.with?("python3")
-      pyver = Language::Python.major_minor_version "python3"
-    end
-
     # Set some env-variables
-    ENV.prepend_create_path "C_INCLUDE_PATH",    "#{`llvm-config --includedir`.chop}"
-    ENV.prepend_create_path "CPP_INCLUDE_PATH",  "#{`llvm-config --includedir`.chop}"
-    ENV.prepend_create_path "LIBRARY_PATH",      "#{`llvm-config --libdir`.chop}"
-    ENV.prepend_create_path "DYLD_LIBRARY_PATH", "#{`llvm-config --libdir`.chop}"
-    ENV.prepend_create_path "PYTHONPATH",        "#{libexec}/vendor/lib/python#{pyver}/site-packages"
-    ENV.prepend_create_path "PATH",              "#{libexec}/vendor/bin"
+    ENV.prepend_create_path "C_INCLUDE_PATH",   "#{`llvm-config --includedir`.chop}"
+    ENV.prepend_create_path "CPP_INCLUDE_PATH", "#{`llvm-config --includedir`.chop}"
+    ENV.prepend_create_path "LIBRARY_PATH",     "#{`llvm-config --libdir`.chop}"
 
     # Make Bohrium
     system "cmake", ".", "-DCMAKE_BUILD_TYPE=Release",
@@ -59,15 +51,9 @@ class Bohrium < Formula
       pyver = Language::Python.major_minor_version "python3"
     end
 
-    # Make sure `llvm-config` is present in PATH
-    ENV["PATH"]="/usr/local/opt/llvm/bin:#{ENV["PATH"]}"
-
     <<-EOS.undent
     You may need to include the following in various environment variables for Bohrium to work properly:
-        export PYTHONPATH="#{libexec}/vendor/lib/python#{pyver}/site-packages:$PYTHONPATH"
-        export C_INCLUDE_PATH="#{`llvm-config --includedir`.chop}:$C_INCLUDE_PATH"
-        export CPP_INCLUDE_PATH="#{`llvm-config --includedir`.chop}:$CPP_INCLUDE_PATH"
-        export LIBRARY_PATH="#{`llvm-config --libdir`.chop}:$LIBRARY_PATH"
+        export PYTHONPATH="/usr/local/lib/python#{pyver}/site-packages:$PYTHONPATH"
         export DYLD_LIBRARY_PATH="/usr/local/lib:$DYLD_LIBRARY_PATH"
 
     Also make sure that 'clang' is on your PATH with e.g.
