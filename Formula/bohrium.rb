@@ -5,12 +5,6 @@ class Bohrium < Formula
   sha256 "b23b6098b16cf081d27adb667af0150211e3cfd600fd88cce3df5c57fadc5ce4"
   head "https://github.com/bh107/bohrium.git"
 
-  # Created with `poet Cython`
-  resource "Cython" do
-    url "https://files.pythonhosted.org/packages/94/63/f54920c2ddbe3e1341a4c268f7091bf1bf53c3d84f4b115aa5beea64aef9/Cython-0.27.tar.gz"
-    sha256 "b932b5194e87a8b853d493dc1b46e38632d6846a86f55b8346eb9c6ec3bdc00b"
-  end
-
   depends_on :arch => :x86_64
 
   depends_on "cmake" => :build
@@ -19,6 +13,7 @@ class Bohrium < Formula
 
   depends_on :python
   depends_on :python3 => :optional
+  depends_on "cython" => [:python]
   depends_on "numpy"
   depends_on "llvm" => ["with-toolchain", "with-shared-libs"]
 
@@ -38,11 +33,6 @@ class Bohrium < Formula
     ENV.prepend_create_path "DYLD_LIBRARY_PATH", "#{`llvm-config --libdir`.chop}"
     ENV.prepend_create_path "PYTHONPATH",        "#{libexec}/vendor/lib/python#{pyver}/site-packages"
     ENV.prepend_create_path "PATH",              "#{libexec}/vendor/bin"
-
-    # Build Cython, because we can't depend on it
-    resource("Cython").stage do
-      system "python", *Language::Python.setup_install_args("#{libexec}/vendor")
-    end
 
     # Make Bohrium
     system "cmake", ".", "-DCMAKE_BUILD_TYPE=Release",
@@ -74,11 +64,11 @@ class Bohrium < Formula
 
     <<-EOS.undent
     You may need to include the following in various environment variables for Bohrium to work properly:
-        export PYTHONPATH="$PYTHONPATH;"#{libexec}/vendor/lib/python#{pyver}/site-packages"
-        export C_INCLUDE_PATH="$C_INCLUDE_PATH;#{`llvm-config --includedir`.chop}"
-        export CPP_INCLUDE_PATH="$CPP_INCLUDE_PATH;#{`llvm-config --includedir`.chop}"
-        export LIBRARY_PATH="$LIBRARY_PATH;#{`llvm-config --libdir`.chop}"
-        export DYLD_LIBRARY_PATH="$DYLD_LIBRARY_PATH;#{`llvm-config --libdir`.chop}"
+        export PYTHONPATH="#{libexec}/vendor/lib/python#{pyver}/site-packages:$PYTHONPATH"
+        export C_INCLUDE_PATH="#{`llvm-config --includedir`.chop}:$C_INCLUDE_PATH"
+        export CPP_INCLUDE_PATH="#{`llvm-config --includedir`.chop}:$CPP_INCLUDE_PATH"
+        export LIBRARY_PATH="#{`llvm-config --libdir`.chop}:$LIBRARY_PATH"
+        export DYLD_LIBRARY_PATH="/usr/local/lib:$DYLD_LIBRARY_PATH"
 
     Also make sure that 'clang' is on your PATH with e.g.
         export PATH="/usr/local/opt/llvm/bin:$PATH"
