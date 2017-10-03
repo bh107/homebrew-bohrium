@@ -63,7 +63,13 @@ class Bohrium < Formula
     touch "#{prefix}/var/bohrium/kernels/.empty"
   end
 
-  def caveats; <<-EOS.undent
+  def caveats
+    pyver = Language::Python.major_minor_version "python"
+    if build.with?("python3")
+      pyver = Language::Python.major_minor_version "python3"
+    end
+
+    <<-EOS.undent
     You may need to include the following in various environment variables for Bohrium to work properly:
         export PATH="#{libexec}/vendor/bin:$PATH"
         export PYTHONPATH="$PYTHONPATH;"#{libexec}/vendor/lib/python#{pyver}/site-packages"
