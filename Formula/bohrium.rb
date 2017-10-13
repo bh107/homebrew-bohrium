@@ -30,7 +30,7 @@ class Bohrium < Formula
     system "cmake", ".", "-DCMAKE_BUILD_TYPE=Release",
                          "-DCMAKE_INSTALL_PREFIX=#{prefix}",
                          "-Wno-dev",
-                         "-DEXT_VISUALIZER=OFF"
+                         "-DEXT_VISUALIZER=OFF",
                          "-DUSE_WERROR=ON",
                          "-DCMAKE_CXX_COMPILER=clang++",
                          "-DCMAKE_C_COMPILER=clang",
