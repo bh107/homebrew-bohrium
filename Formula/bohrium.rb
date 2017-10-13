@@ -1,8 +1,8 @@
 class Bohrium < Formula
   desc "Runtime for efficiently executing vectorized applications using Python"
   homepage "http://bohrium.readthedocs.io/"
-  url "https://github.com/bh107/bohrium/archive/v0.8.7.tar.gz"
-  sha256 "b23b6098b16cf081d27adb667af0150211e3cfd600fd88cce3df5c57fadc5ce4"
+  url "https://github.com/bh107/bohrium/archive/v0.8.8.tar.gz"
+  sha256 "5aae47d1fb7c97cf4777a17430f579ef53690be2298c4aeed3b4ea0ba25847c4"
   head "https://github.com/bh107/bohrium.git"
 
   depends_on :arch => :x86_64
@@ -30,6 +30,7 @@ class Bohrium < Formula
     system "cmake", ".", "-DCMAKE_BUILD_TYPE=Release",
                          "-DCMAKE_INSTALL_PREFIX=#{prefix}",
                          "-Wno-dev",
+                         "-DEXT_VISUALIZER=OFF"
                          "-DUSE_WERROR=ON",
                          "-DCMAKE_CXX_COMPILER=clang++",
                          "-DCMAKE_C_COMPILER=clang",
