@@ -11,8 +11,8 @@ class Bohrium < Formula
   depends_on "boost" => [:build, "with-icu4c", "with-c++11"]
   depends_on "swig" => :build
 
-  depends_on :python
-  depends_on :python3 => :optional
+  depends_on "python"
+  depends_on "python3" => :optional
   # depends_on "cython" => [:python]
   depends_on "numpy"
   depends_on "llvm" => ["with-toolchain", "with-shared-libs"]
