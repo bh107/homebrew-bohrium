@@ -1,3 +1,10 @@
+### THIS PACKAGE IS DEPRECATED
+
+Bohrium is now installable as a Python package.
+Use `pip install -U bohrium`.
+
+---
+
 # Bohrium
 
 This is the home for the Homebrew (https://brew.sh) package for Bohrium (https://github.com/bh107/bohrium)
